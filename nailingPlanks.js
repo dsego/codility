@@ -16,14 +16,21 @@ function solution(A, B, C) {
         nail_indexes[C[j]] = j;
     }
 
-    let nails = nail_indexes.map((v, k) => [k, v]).filter((n) => n[1] > -1).map((n) => n[0])
+    let nails = nail_indexes
+        .map((v, k) => [k, v])
+        .filter((n) => n[1] > -1)
+        .map((n) => n[0])
 
     // Sort planks by their position and keep the shortest one for each position.
     // If the short ones can't be nailed, we don't need to check the longer ones.
     // If the short ones can be nailed, so can the longer ones at the same position.
     // We can simply eliminate the longer ones from consideration.
 
-    let planks = A.map((a, i) => ({a: A[i], b: B[i], l: B[i]-A[i] }))
+    let planks = A.map((a, i) => ({
+        a: A[i],
+        b: B[i],
+        l: B[i]-A[i]
+    }))
     planks.sort((x, y) => x.a - y.a)
 
     let short_planks = []
