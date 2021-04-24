@@ -32,8 +32,8 @@ function solution(K, M, A) {
         max_element = Math.max(max_element, a)
     }
 
-    let beg = max_element
-    let end = total_sum
+    let beg = max_element // the smallest possible sum
+    let end = total_sum   // the largest possible sum
     let result = 0
 
 
