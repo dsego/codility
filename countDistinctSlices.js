@@ -1,40 +1,59 @@
 
 // -----------------------------------------------------------------------------
 //  COUNT DISTINCT SLICES
+//  Count the number of distinct slices (containing only unique numbers).
+//
+//  Report: https://app.codility.com/demo/results/training4VD3BZ-RMY/
 // -----------------------------------------------------------------------------
 
+
 function solution(M, A) {
-    const MAX =  1000000000;
-    let total = 0
-    let back = 0;
-    let front
+    const MAX = 1000000000
 
-    while (back < A.length && front < A.length) {
+    let i = 0
+    let j = 1
+    let seen = {}
+    let count = 0
+    let k = 0 // index of duplicate number
 
-        front = back + 1
+    // first encounter
+    seen[A[i]] = i
 
-        // extend phase
-        while (front < A.length && A[front] != A[back]) {
-            front += 1;
-            // if (total >= MAX) return MAX
+    while (j < A.length) {
+        if (A[j] in seen) {
+
+            // for case like this [1, 2, 3, 3, 2, 3] we want to skip to the
+            //  latest duplicate, which is number 3, not 2
+            k = Math.max(seen[A[j]], k)
+
+            // triangular number: n * (n + 1) / 2
+
+            const to_add = (j - i) * (j - i + 1) / 2
+            const to_subtract = (j - k - 1) * (j - k) / 2
+
+            count += to_add - to_subtract
+
+            if (count > MAX) {
+                return MAX
+            }
+
+            // console.log(i, j, to_add, to_subtract)
+            i = k + 1
         }
-        console.log('extend', back, front)
+        seen[A[j]] = j
+        j += 1
+    }
+    count += (j - i) * (j - i + 1) / 2
 
-        // retract phase
-        while (back < front) {
-            back += 1
-        }
-        console.log('retract', back, front)
-
-        // return
-        // total += count
-
+    if (count > MAX) {
+        return MAX
     }
 
-    return total;
+    return count
 }
 
 
+console.log(solution(6, [1, 8, 2, 4, 8])) // 13
 console.log(solution(6, [3, 4, 5, 5, 2])) // 9
 console.log(solution(6, [0, 1, 2, 3])) // 10
 console.log(solution(6, [5, 5, 5, 5])) // 4
@@ -43,8 +62,12 @@ console.log(solution(9, [1, 2, 2, 1, 2, 3])) // 11
 console.log(solution(9, [1, 2, 3, 1, 2, 3])) // 15
 
 
-// 1 2 3
-//   2 3 1
-//     3 1 2
-//       1 2 3
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+const M = 100000
+const N = 100000
+const LARGE_ARRAY = (new Array(N)).fill(0).map(() => getRandomInt(M))
+// console.log(LARGE_ARRAY)
+console.log(solution(M, LARGE_ARRAY))
 
