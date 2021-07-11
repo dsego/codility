@@ -50,3 +50,36 @@ function solution(A) {
 console.log(solution([1, 5, 2, -2])) // 0,  S = [−1, 1, −1, 1]
 console.log(solution([100, 5, 6, -100, -2, 2])) // 1
 console.log(solution([3, 1])) // 2
+
+
+/*
+
+Examining the slow solution:
+
+A   5  2  2
+
+M = 5
+S = sum(A) = 9
+iterate down from S to 0
+
+    0  1  2  3  4  5  6  7  8   9
+----------------------------------
+dp  1  0  0  0  0  0  0  0  0  0
+ 5                 1
+ 2        1              1
+ 2        1     1        1     1
+
+
+     0 1 2 3 4 5 6 7 8 9
+    ---------------------
+dp = 1 0 1 0 1 1 0 1 0 1
+
+P = 4
+Q = 5
+res = 1
+
+Note:
+for line 17 in the solution: min(result, S - 2*i),
+ that S - 2*i is just a different way of doing ceil(S/2) - i
+
+*/
