@@ -8,7 +8,7 @@
 
 function solution(N, P, Q) {
 
-    function gey_factorization_array(n) {
+    function get_factorization_array(n) {
         let f = Array(n+1).fill(0)
         let i = 2
         while (i * i <= n) {
@@ -39,7 +39,7 @@ function solution(N, P, Q) {
     }
 
 
-    let f_array = gey_factorization_array(N)
+    let f_array = get_factorization_array(N)
 
     let M = P.length
 
